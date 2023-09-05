@@ -1,4 +1,15 @@
 export enum RoleEnum {
-  'admin' = 1,
-  'user' = 2,
+  ADMIN = 1,
+  CLIENT = 2,
+  TRAINER = 3,
+  GYM = 4,
+  NUTRITION = 5,
+}
+
+export enum RoleEnumName {
+  ADMIN = 'Admin',
+  CLIENT = 'Client',
+  TRAINER = 'Trainer',
+  GYM = 'Gym',
+  NUTRITION = 'Nutrition',
 }

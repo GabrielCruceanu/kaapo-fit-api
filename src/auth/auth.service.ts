@@ -54,7 +54,7 @@ export class AuthService {
     if (
       !user ||
       (user?.role &&
-        !(onlyAdmin ? [RoleEnum.admin] : [RoleEnum.user]).includes(
+        !(onlyAdmin ? [RoleEnum.ADMIN] : [RoleEnum.CLIENT]).includes(
           user.role.id,
         ))
     ) {
@@ -141,7 +141,7 @@ export class AuthService {
       user = userByEmail;
     } else {
       const role = plainToClass(Role, {
-        id: RoleEnum.user,
+        id: RoleEnum.CLIENT,
       });
       const status = plainToClass(Status, {
         id: StatusEnum.active,
@@ -206,7 +206,7 @@ export class AuthService {
       ...dto,
       email: dto.email,
       role: {
-        id: RoleEnum.user,
+        id: RoleEnum.CLIENT,
       } as Role,
       status: {
         id: StatusEnum.inactive,

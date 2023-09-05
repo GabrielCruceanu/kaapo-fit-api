@@ -10,6 +10,7 @@ import {
   UpdateDateColumn,
   BeforeInsert,
   BeforeUpdate,
+  OneToOne,
 } from 'typeorm';
 import { Role } from '../../roles/entities/role.entity';
 import { Status } from '../../statuses/entities/status.entity';
@@ -18,6 +19,9 @@ import bcrypt from 'bcryptjs';
 import { EntityHelper } from 'src/utils/entity-helper';
 import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 import { Exclude, Expose } from 'class-transformer';
+import { Client } from './client.entity';
+import { Trainer } from './trainer.entity';
+import { Nutritionist } from './nutritionist.entity';
 
 @Entity()
 export class User extends EntityHelper {
@@ -96,4 +100,13 @@ export class User extends EntityHelper {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @OneToOne(() => Client, (client) => client.user)
+  client: Client;
+
+  @OneToOne(() => Trainer, (trainer) => trainer.user)
+  trainer: Trainer;
+
+  @OneToOne(() => Nutritionist, (nutritionist) => nutritionist.user)
+  nutritionist: Nutritionist;
 }
