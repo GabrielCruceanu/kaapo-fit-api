@@ -1,13 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsDate,
-  IsEmail,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-  MaxLength,
-} from 'class-validator';
-import { GenderType } from '../../users/types/gender.enum';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { TrainerSpecialization } from '../types/trainer-specialization.enum';
 
 export class UpdateTrainerProfessionalInformationDto {
@@ -15,9 +7,7 @@ export class UpdateTrainerProfessionalInformationDto {
   @IsEnum(TrainerSpecialization)
   specialization: TrainerSpecialization;
 
-  @ApiProperty({ example: 5 })
-  @IsNotEmpty()
-  yearsOfExperience: number;
+  @ApiProperty({ example: 5 }) @IsNotEmpty() yearsOfExperience: number;
 
   @ApiProperty({
     example: [
@@ -33,9 +23,7 @@ export class UpdateTrainerProfessionalInformationDto {
   @IsString({ each: true })
   achievements?: string[];
 
-  @ApiProperty({ example: 'Sport College' })
-  @IsString()
-  education?: string;
+  @ApiProperty({ example: 'Sport College' }) @IsString() education?: string;
 
   @ApiProperty({ example: ['English', 'German'] })
   @IsNotEmpty()

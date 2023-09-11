@@ -33,7 +33,6 @@ import { WorkoutModule } from './workout/workout.module';
 import { AppointmentModule } from './appointment/appointment.module';
 import { ReviewModule } from './review/review.module';
 import { TrainerModule } from './trainer/trainer.module';
-import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -97,8 +96,7 @@ import { AddressModule } from './address/address.module';
     WorkoutModule,
     AppointmentModule,
     TrainerModule,
-    ReviewModule,
-    // AddressModule,
+    ReviewModule, // AddressModule,
   ],
 })
 export class AppModule {}

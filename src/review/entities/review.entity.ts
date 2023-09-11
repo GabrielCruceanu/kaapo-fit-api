@@ -1,30 +1,24 @@
 import {
-  Entity,
-  PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Trainer } from '../../trainer/entities/trainer.entity';
-import { Nutritionist } from '../../users/entities/nutritionist.entity';
 
 @Entity()
 export class Review {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn() id: number;
 
-  @Column({ type: 'text' })
-  content: string;
+  @Column({ type: 'text' }) content: string;
 
-  @Column({ type: 'int', default: 0 })
-  rating: number; // Assuming a scale of 1-5, adjust as needed
+  @Column({ type: 'int', default: 0 }) rating: number; // Assuming a scale of 1-5, adjust as needed
 
-  @CreateDateColumn()
-  date: Date;
+  @CreateDateColumn() date: Date;
 
-  @ManyToOne(() => User, (user) => user.id)
-  reviewer: User; // This represents the user who wrote the review
+  @ManyToOne(() => User, (user) => user.id) reviewer: User; // This represents the user who wrote the review
 
   @ManyToOne(() => Trainer, (trainer) => trainer.clientReviews, {
     onDelete: 'CASCADE',

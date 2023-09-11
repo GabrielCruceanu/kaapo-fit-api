@@ -2,15 +2,15 @@ import { Injectable, Logger } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from './entities/address.entity';
-import { Trainer } from '../trainer/entities/trainer.entity';
 
 @Injectable()
 export class AddressService {
   private readonly logger = new Logger(AddressService.name);
+
   constructor(
-    @InjectRepository(Address)
-    private addressRepository: Repository<Address>,
+    @InjectRepository(Address) private addressRepository: Repository<Address>,
   ) {}
+
   async create(address: Address): Promise<Address> {
     this.logger.debug(`Creating a new address: ${address}`);
     return this.addressRepository.save(address);
