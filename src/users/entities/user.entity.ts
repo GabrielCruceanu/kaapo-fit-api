@@ -20,7 +20,7 @@ import { EntityHelper } from 'src/utils/entity-helper';
 import { AuthProvidersEnum } from 'src/auth/auth-providers.enum';
 import { Exclude, Expose } from 'class-transformer';
 import { Client } from './client.entity';
-import { Trainer } from './trainer.entity';
+import { Trainer } from '../../trainer/entities/trainer.entity';
 import { Nutritionist } from './nutritionist.entity';
 
 @Entity()
@@ -50,7 +50,7 @@ export class User extends EntityHelper {
   @BeforeUpdate()
   async setPassword() {
     if (this.previousPassword !== this.password && this.password) {
-      const salt = await bcrypt.genSalt();
+      const salt = await bcrypt.genSalt(10);
       this.password = await bcrypt.hash(this.password, salt);
     }
   }
@@ -71,6 +71,10 @@ export class User extends EntityHelper {
   @Index()
   @Column({ type: String, nullable: true })
   lastName: string | null;
+
+  @Index()
+  @Column({ type: String, unique: true, nullable: true })
+  username: string | null;
 
   @ManyToOne(() => FileEntity, {
     eager: true,
@@ -101,11 +105,11 @@ export class User extends EntityHelper {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @OneToOne(() => Client, (client) => client.user)
-  client: Client;
-
   @OneToOne(() => Trainer, (trainer) => trainer.user)
   trainer: Trainer;
+
+  @OneToOne(() => Client, (client) => client.user)
+  client: Client;
 
   @OneToOne(() => Nutritionist, (nutritionist) => nutritionist.user)
   nutritionist: Nutritionist;

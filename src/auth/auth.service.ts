@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import ms from 'ms';
@@ -34,6 +35,7 @@ import { JwtPayloadType } from './strategies/types/jwt-payload.type';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   constructor(
     private jwtService: JwtService,
     private usersService: UsersService,
@@ -47,6 +49,8 @@ export class AuthService {
     loginDto: AuthEmailLoginDto,
     onlyAdmin: boolean,
   ): Promise<LoginResponseType> {
+    this.logger.debug(`Validate login with ${loginDto} and admin ${onlyAdmin}`);
+
     const user = await this.usersService.findOne({
       email: loginDto.email,
     });
@@ -120,6 +124,10 @@ export class AuthService {
     authProvider: string,
     socialData: SocialInterface,
   ): Promise<LoginResponseType> {
+    this.logger.debug(
+      `Validate social login with ${authProvider} and social data ${socialData}`,
+    );
+
     let user: NullableType<User>;
     const socialEmail = socialData.email?.toLowerCase();
 
@@ -197,6 +205,8 @@ export class AuthService {
   }
 
   async register(dto: AuthRegisterLoginDto): Promise<void> {
+    this.logger.debug(`Register with ${dto}`);
+
     const hash = crypto
       .createHash('sha256')
       .update(randomStringGenerator())
@@ -223,6 +233,8 @@ export class AuthService {
   }
 
   async confirmEmail(hash: string): Promise<void> {
+    this.logger.debug(`Confirm email with ${hash}`);
+
     const user = await this.usersService.findOne({
       hash,
     });
@@ -245,6 +257,8 @@ export class AuthService {
   }
 
   async forgotPassword(email: string): Promise<void> {
+    this.logger.debug(`Forgot password with email ${email}`);
+
     const user = await this.usersService.findOne({
       email,
     });
@@ -279,6 +293,8 @@ export class AuthService {
   }
 
   async resetPassword(hash: string, password: string): Promise<void> {
+    this.logger.debug(`Reset password`);
+
     const forgot = await this.forgotService.findOne({
       where: {
         hash,
@@ -319,6 +335,8 @@ export class AuthService {
     userJwtPayload: JwtPayloadType,
     userDto: AuthUpdateDto,
   ): Promise<NullableType<User>> {
+    this.logger.debug(`Update user ${userJwtPayload} and user dto: ${userDto}`);
+
     if (userDto.password) {
       if (userDto.oldPassword) {
         const currentUser = await this.usersService.findOne({
@@ -383,6 +401,8 @@ export class AuthService {
   async refreshToken(
     data: Pick<JwtRefreshPayloadType, 'sessionId'>,
   ): Promise<Omit<LoginResponseType, 'user'>> {
+    this.logger.debug(`Refreshing token for ${data}`);
+
     const session = await this.sessionService.findOne({
       where: {
         id: data.sessionId,
@@ -407,10 +427,14 @@ export class AuthService {
   }
 
   async softDelete(user: User): Promise<void> {
+    this.logger.debug(`Delete user: ${user}`);
+
     await this.usersService.softDelete(user.id);
   }
 
   async logout(data: Pick<JwtRefreshPayloadType, 'sessionId'>) {
+    this.logger.debug(`Logout user: ${data}`);
+
     return this.sessionService.softDelete({
       id: data.sessionId,
     });
@@ -421,6 +445,10 @@ export class AuthService {
     role: User['role'];
     sessionId: Session['id'];
   }) {
+    this.logger.debug(
+      `Get tokens data: ${data.id} , ${data.role}, ${data.sessionId}`,
+    );
+
     const tokenExpiresIn = this.configService.getOrThrow('auth.expires', {
       infer: true,
     });

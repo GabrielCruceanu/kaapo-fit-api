@@ -9,7 +9,6 @@ import {
 import { User } from './user.entity';
 import { Client } from './client.entity';
 import { Diet } from '../../diet/entity/diet.entity';
-import { Trainer } from './trainer.entity';
 import { Appointment } from '../../appointment/entity/appointment.entity';
 import { NutritionistType } from '../types/nutritionist.enum';
 import { EntityHelper } from '../../utils/entity-helper';
@@ -19,7 +18,7 @@ export class Nutritionist extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => User, (user) => user.trainer)
+  @OneToOne(() => User, (user) => user.nutritionist)
   @JoinColumn()
   user: User;
 
@@ -37,9 +36,6 @@ export class Nutritionist extends EntityHelper {
 
   @OneToMany(() => Diet, (diet) => diet.nutritionist)
   dietPlans: Diet[];
-
-  @OneToOne(() => Trainer, (trainer) => trainer.nutritionist)
-  trainer: Trainer;
 
   @OneToMany(() => Appointment, (appointment) => appointment.nutritionist)
   nutritionistAppointments: Appointment[] | null;

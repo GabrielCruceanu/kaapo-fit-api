@@ -5,7 +5,7 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Trainer } from '../../users/entities/trainer.entity';
+import { Trainer } from '../../trainer/entities/trainer.entity';
 import { Client } from '../../users/entities/client.entity';
 import { Nutritionist } from '../../users/entities/nutritionist.entity';
 import { EntityHelper } from '../../utils/entity-helper';
@@ -21,7 +21,7 @@ export class Appointment extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Trainer, (trainer) => trainer.trainerAppointments)
+  @ManyToOne(() => Trainer, (trainer) => trainer.appointments)
   @JoinColumn({ name: 'trainer_id' })
   trainer: Trainer;
 

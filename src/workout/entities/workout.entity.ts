@@ -11,14 +11,14 @@ import {
 import { Exercise } from './exercise.entity';
 import { WorkoutGoal, WorkoutSkillLevel, WorkoutType } from '../workout.enum';
 import { Client } from '../../users/entities/client.entity';
-import { Trainer } from '../../users/entities/trainer.entity';
+import { Trainer } from '../../trainer/entities/trainer.entity';
 import { EntityHelper } from '../../utils/entity-helper';
 
 @Entity()
 export class Workout extends EntityHelper {
   @PrimaryGeneratedColumn() id: number;
 
-  @ManyToOne(() => Trainer, (trainer) => trainer.workoutPlans)
+  @ManyToOne(() => Trainer, (trainer) => trainer.workouts)
   @JoinColumn({ name: 'trainer_id' })
   trainer: Trainer;
 

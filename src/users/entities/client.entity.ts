@@ -9,8 +9,8 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { WorkoutGoal } from '../../workout/workout.enum';
-import { Trainer } from './trainer.entity';
-import { TrainingSession } from './training-session.entity';
+import { Trainer } from '../../trainer/entities/trainer.entity';
+import { TrainingSession } from '../../trainer/entities/training-session.entity';
 import { Nutritionist } from './nutritionist.entity';
 import { Appointment } from '../../appointment/entity/appointment.entity';
 import { GenderType } from '../types/gender.enum';

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from './entity/appointment.entity';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
@@ -8,13 +8,15 @@ import { GetAppointmentsFilterDto } from './dto/get-appointments-filter.dto';
 
 @Injectable()
 export class AppointmentService {
+  private readonly logger = new Logger(AppointmentService.name);
   constructor(
     @InjectRepository(Appointment)
     private appointmentRepository: Repository<Appointment>,
   ) {}
 
   create(createAppointmentDto: CreateAppointmentDto): Promise<Appointment> {
-    console.log('createAppointmentDto', createAppointmentDto);
+    this.logger.debug(`Creating a new appointment: ${createAppointmentDto}`);
+
     return this.appointmentRepository.save(
       this.appointmentRepository.create(createAppointmentDto),
     );
@@ -23,6 +25,10 @@ export class AppointmentService {
   findManyWithPagination(
     paginationOptions: IPaginationOptions,
   ): Promise<Appointment[]> {
+    this.logger.debug(
+      `Finding all appointments with pagination: ${paginationOptions}`,
+    );
+
     return this.appointmentRepository.find({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
@@ -32,6 +38,10 @@ export class AppointmentService {
   findManyByStatus(
     getAppointmentsFilterDto: GetAppointmentsFilterDto,
   ): Promise<Appointment[]> {
+    this.logger.debug(
+      `Finding all appointments by status: ${getAppointmentsFilterDto}`,
+    );
+
     return this.appointmentRepository.findBy({
       status: getAppointmentsFilterDto.status,
     });

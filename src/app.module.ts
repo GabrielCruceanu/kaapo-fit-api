@@ -31,6 +31,9 @@ import { MailerModule } from './mailer/mailer.module';
 import { DietModule } from './diet/diet.module';
 import { WorkoutModule } from './workout/workout.module';
 import { AppointmentModule } from './appointment/appointment.module';
+import { ReviewModule } from './review/review.module';
+import { TrainerModule } from './trainer/trainer.module';
+import { AddressModule } from './address/address.module';
 
 @Module({
   imports: [
@@ -93,6 +96,9 @@ import { AppointmentModule } from './appointment/appointment.module';
     DietModule,
     WorkoutModule,
     AppointmentModule,
+    TrainerModule,
+    ReviewModule,
+    // AddressModule,
   ],
 })
 export class AppModule {}

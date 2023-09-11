@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { UserSeedService } from './user-seed.service';
 import { Client } from '../../../users/entities/client.entity';
-import { Trainer } from '../../../users/entities/trainer.entity';
+import { Trainer } from '../../../trainer/entities/trainer.entity';
 import { Nutritionist } from '../../../users/entities/nutritionist.entity';
 
 @Module({

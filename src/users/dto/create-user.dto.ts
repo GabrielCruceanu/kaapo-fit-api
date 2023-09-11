@@ -33,12 +33,16 @@ export class CreateUserDto {
   socialId?: string | null;
 
   @ApiProperty({ example: 'John' })
-  @IsNotEmpty()
-  firstName: string | null;
+  firstName?: string | null;
 
   @ApiProperty({ example: 'Doe' })
-  @IsNotEmpty()
-  lastName: string | null;
+  lastName?: string | null;
+
+  @ApiProperty({ example: 'jondoe' })
+  @Validate(IsNotExist, ['User'], {
+    message: 'usernameAlreadyExists',
+  })
+  username?: string | null;
 
   @ApiProperty({ type: () => FileEntity })
   @IsOptional()

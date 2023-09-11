@@ -5,9 +5,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from './user.entity';
+import { User } from '../../users/entities/user.entity';
 import { Trainer } from './trainer.entity';
-import { Client } from './client.entity';
+import { Client } from '../../users/entities/client.entity';
 
 @Entity()
 export class TrainingSession {
